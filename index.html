@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Green Portal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #0d1f0d 0%, #000000 50%, #0a2e0a 100%);
+        }
+
+        .login-container {
+            background: linear-gradient(145deg, rgba(0, 20, 0, 0.9), rgba(0, 10, 0, 0.95));
+            padding: 40px 50px;
+            border-radius: 15px;
+            box-shadow: 0 0 40px rgba(0, 255, 65, 0.15),
+                        inset 0 0 60px rgba(0, 255, 65, 0.03);
+            border: 1px solid rgba(0, 255, 65, 0.2);
+            width: 100%;
+            max-width: 400px;
+            backdrop-filter: blur(10px);
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .login-header h1 {
+            color: #00ff41;
+            font-size: 28px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 0 0 20px rgba(0, 255, 65, 0.5);
+        }
+
+        .login-header p {
+            color: #4a7c4a;
+            margin-top: 8px;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #2d5a2d;
+            margin-bottom: 8px;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 14px 16px;
+            background: rgba(0, 20, 0, 0.8);
+            border: 1px solid #1a3d1a;
+            border-radius: 8px;
+            color: #00ff41;
+            font-size: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #00ff41;
+            box-shadow: 0 0 15px rgba(0, 255, 65, 0.2),
+                        inset 0 0 10px rgba(0, 255, 65, 0.05);
+        }
+
+        .form-group input::placeholder {
+            color: #2d5a2d;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #0d3d0d 0%, #1a5c1a 50%, #0d3d0d 100%);
+            border: 1px solid #00ff41;
+            border-radius: 8px;
+            color: #00ff41;
+            font-size: 16px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-btn:hover {
+            background: linear-gradient(135deg, #1a5c1a 0%, #2d8a2d 50%, #1a5c1a 100%);
+            box-shadow: 0 0 30px rgba(0, 255, 65, 0.4),
+                        0 0 60px rgba(0, 255, 65, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .error-message {
+            color: #ff4444;
+            font-size: 13px;
+            margin-top: 10px;
+            text-align: center;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+            animation: shake 0.5s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 25px;
+            color: #1a3d1a;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-header">
+            <h1>Portal</h1>
+            <p>Enter your credentials to access</p>
+        </div>
+        
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" placeholder="Enter username" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter password" required>
+            </div>
+            
+            <button type="submit" class="submit-btn">Login</button>
+            
+            <div class="error-message" id="errorMessage">
+                Invalid username or password
+            </div>
+        </form>
+        
+        <div class="footer">
+            © 2026 Green Portal. All rights reserved.
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const errorMessage = document.getElementById('errorMessage');
+            
+            // Simple validation - in production, this would check against a backend
+            if (username && password) {
+                // Store login status in sessionStorage
+                sessionStorage.setItem('isLoggedIn', 'true');
+                sessionStorage.setItem('username', username);
+                
+                // Redirect to dashboard
+                window.location.href = 'dashboard.html';
+            } else {
+                errorMessage.classList.add('show');
+                setTimeout(() => {
+                    errorMessage.classList.remove('show');
+                }, 3000);
+            }
+        });
+    </script>
+</body>
+</html>

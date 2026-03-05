@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الأعضاء - Green Portal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0d1f0d 0%, #000000 50%, #0a2e0a 100%);
+            color: #e0e0e0;
+        }
+
+        .header {
+            background: linear-gradient(145deg, rgba(0, 20, 0, 0.95), rgba(0, 10, 0, 0.98));
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(0, 255, 65, 0.2);
+            box-shadow: 0 2px 20px rgba(0, 255, 65, 0.1);
+        }
+
+        .logo {
+            color: #00ff41;
+            font-size: 24px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 0 0 20px rgba(0, 255, 65, 0.5);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: #4a7c4a;
+            text-decoration: none;
+            font-size: 14px;
+            padding: 8px 16px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: #00ff41;
+            background: rgba(0, 255, 65, 0.1);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logout-btn {
+            padding: 10px 20px;
+            background: transparent;
+            border: 1px solid #ff4444;
+            border-radius: 6px;
+            color: #ff4444;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background: #ff4444;
+            color: #000;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .page-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .page-title h1 {
+            color: #00ff41;
+            font-size: 36px;
+            margin-bottom: 10px;
+            text-shadow: 0 0 30px rgba(0, 255, 65, 0.4);
+        }
+
+        .page-title p {
+            color: #4a7c4a;
+            font-size: 16px;
+        }
+
+        .members-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .member-card {
+            background: linear-gradient(145deg, rgba(0, 20, 0, 0.9), rgba(0, 10, 0, 0.95));
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid rgba(0, 255, 65, 0.15);
+            box-shadow: 0 0 30px rgba(0, 255, 65, 0.08);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .member-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(0, 255, 65, 0.3);
+            box-shadow: 0 0 40px rgba(0, 255, 65, 0.15);
+        }
+
+        .member-avatar {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #0d3d0d, #1a5c1a);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: #00ff41;
+            font-weight: 700;
+            border: 2px solid rgba(0, 255, 65, 0.3);
+        }
+
+        .member-info h3 {
+            color: #00ff41;
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+
+        .member-info p {
+            color: #4a7c4a;
+            font-size: 13px;
+        }
+
+        .member-status {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: #00ff41;
+            border-radius: 50%;
+            margin-left: 8px;
+        }
+
+        .member-status.offline {
+            background: #4a7c4a;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 30px;
+            color: #1a3d1a;
+            font-size: 12px;
+            margin-top: 50px;
+            border-top: 1px solid rgba(0, 255, 65, 0.1);
+        }
+
+        .back-link {
+            display: inline-block;
+            color: #00ff41;
+            text-decoration: none;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">Green Portal</div>
+        <nav class="nav-links">
+            <a href="dashboard.html">لوحة التحكم</a>
+            <a href="projects.html">المشاريع</a>
+            <a href="members.html" class="active">الأعضاء</a>
+        </nav>
+        <div class="user-info">
+            <button class="logout-btn" onclick="logout()">تسجيل خروج</button>
+        </div>
+    </header>
+
+    <div class="container">
+        <a href="dashboard.html" class="back-link">← العودة للوحة التحكم</a>
+        
+        <div class="page-title">
+            <h1>الأعضاء</h1>
+            <p>قائمة بأسماء الأعضاء المسجلين</p>
+        </div>
+
+        <div class="members-grid" id="membersList">
+            <!-- Members will be populated here -->
+        </div>
+    </div>
+
+    <footer class="footer">
+        © 2026 Green Portal. All rights reserved.
+    </footer>
+
+    <script>
+        // Check if user is logged in
+        const isLoggedIn = sessionStorage.getItem('isLoggedIn');
+
+        if (!isLoggedIn) {
+            window.location.href = 'index.html';
+        }
+
+        // Members data - يمكن تعديل هذه البيانات
+        const members = [
+            { name: 'أحمد محمد', status: 'online' },
+            { name: 'سارة علي', status: 'online' },
+            { name: 'محمد خالد', status: 'offline' },
+            { name: 'فاطمة أحمد', status: 'online' },
+            { name: 'عمر يوسف', status: 'offline' },
+            { name: 'منى سعيد', status: 'online' },
+            { name: 'علي حسن', status: 'online' },
+            { name: 'نورة عبدالله', status: 'offline' },
+            { name: 'خالد إبراهيم', status: 'online' },
+            { name: 'هند عمر', status: 'offline' },
+            { name: 'عبدالله جمال', status: 'online' },
+            { name: 'ليلى سمير', status: 'offline' }
+        ];
+
+        // Get first letter for avatar
+        function getInitials(name) {
+            return name.charAt(0);
+        }
+
+        // Render members
+        function renderMembers() {
+            const membersList = document.getElementById('membersList');
+            membersList.innerHTML = members.map(member => `
+                <div class="member-card">
+                    <div class="member-avatar">${getInitials(member.name)}</div>
+                    <div class="member-info">
+                        <h3>${member.name}</h3>
+                        <p>
+                            <span class="member-status ${member.status}"></span>
+                            ${member.status === 'online' ? 'متصل' : 'غير متصل'}
+                        </p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Render on page load
+        renderMembers();
+
+        // Logout function
+        function logout() {
+            sessionStorage.removeItem('isLoggedIn');
+            sessionStorage.removeItem('username');
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>
+
