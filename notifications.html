@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الإشعارات - Green Portal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0d1f0d 0%, #000000 50%, #0a2e0a 100%);
+            color: #e0e0e0;
+        }
+
+        .header {
+            background: linear-gradient(145deg, rgba(0, 20, 0, 0.95), rgba(0, 10, 0, 0.98));
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(0, 255, 65, 0.2);
+            box-shadow: 0 2px 20px rgba(0, 255, 65, 0.1);
+        }
+
+        .logo {
+            color: #00ff41;
+            font-size: 24px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 0 0 20px rgba(0, 255, 65, 0.5);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: #4a7c4a;
+            text-decoration: none;
+            font-size: 14px;
+            padding: 8px 16px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: #00ff41;
+            background: rgba(0, 255, 65, 0.1);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-info span {
+            color: #4a7c4a;
+            font-size: 14px;
+        }
+
+        .user-info .username {
+            color: #00ff41;
+            font-weight: 600;
+        }
+
+        .logout-btn {
+            padding: 10px 20px;
+            background: transparent;
+            border: 1px solid #ff4444;
+            border-radius: 6px;
+            color: #ff4444;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background: #ff4444;
+            color: #000;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .back-link {
+            display: inline-block;
+            color: #00ff41;
+            text-decoration: none;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .page-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .page-title h1 {
+            color: #00ff41;
+            font-size: 36px;
+            margin-bottom: 10px;
+            text-shadow: 0 0 30px rgba(0, 255, 65, 0.4);
+        }
+
+        .page-title p {
+            color: #4a7c4a;
+            font-size: 16px;
+        }
+
+        .notifications-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .notifications-header h2 {
+            color: #00ff41;
+            font-size: 20px;
+        }
+
+        .mark-all-btn {
+            padding: 8px 20px;
+            background: transparent;
+            border: 1px solid #00ff41;
+            border-radius: 6px;
+            color: #00ff41;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .mark-all-btn:hover {
+            background: #00ff41;
+            color: #000;
+        }
+
+        .filter-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .filter-tab {
+            padding: 8px 20px;
+            background: rgba(0, 20, 0, 0.8);
+            border: 1px solid rgba(0, 255, 65, 0.15);
+            border-radius: 20px;
+            color: #4a7c4a;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-tab:hover, .filter-tab.active {
+            background: rgba(0, 255, 65, 0.15);
+            border-color: rgba(0, 255, 65, 0.3);
+            color: #00ff41;
+        }
+
+        .notifications-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .notification-item {
+            background: linear-gradient(145deg, rgba(0, 20, 0, 0.9), rgba(0, 10, 0, 0.95));
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid rgba(0, 255, 65, 0.15);
+            display: flex;
+            gap: 15px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .notification-item:hover {
+            transform: translateX(5px);
+            border-color: rgba(0, 255, 65, 0.3);
+            box-shadow: 0 0 30px rgba(0, 255, 65, 0.1);
+        }
+
+        .notification-item.unread {
+            border-left: 3px solid #00ff41;
+        }
+
+        .notification-icon {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #0d3d0d, #1a5c1a);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .notification-content {
+            flex: 1;
+        }
+
+        .notification-title {
+            color: #00ff41;
+            font-size: 16px;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .notification-title .badge {
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .badge.new {
+            background: rgba(0, 255, 65, 0.2);
+            color: #00ff41;
+        }
+
+        .badge.important {
+            background: rgba(255, 165, 0, 0.2);
+            color: #ffa500;
+        }
+
+        .badge.warning {
+            background: rgba(255, 68, 68, 0.2);
+            color: #ff4444;
+        }
+
+        .notification-message {
+            color: #4a7c4a;
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 8px;
+        }
+
+        .notification-time {
+            color: #2d5a2d;
+            font-size: 12px;
+        }
+
+        .notification-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .action-btn {
+            padding: 5px 12px;
+            background: transparent;
+            border: 1px solid rgba(0, 255, 65, 0.3);
+            border-radius: 4px;
+            color: #00ff41;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .action-btn:hover {
+            background: #00ff41;
+            color: #000;
+        }
+
+        .action-btn.danger {
+            border-color: rgba(255, 68, 68, 0.3);
+            color: #ff4444;
+        }
+
+        .action-btn.danger:hover {
+            background: #ff4444;
+            color: #000;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #4a7c4a;
+        }
+
+        .empty-state-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 30px;
+            color: #1a3d1a;
+            font-size: 12px;
+            margin-top: 50px;
+            border-top: 1px solid rgba(0, 255, 65, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">Green Portal</div>
+        <nav class="nav-links">
+            <a href="dashboard.html">لوحة التحكم</a>
+            <a href="analytics.html">التحليلات</a>
+            <a href="projects.html">المشاريع</a>
+            <a href="members.html">الأعضاء</a>
+        </nav>
+        <div class="user-info">
+            <span>مرحباً، <span class="username" id="displayUsername">User</span></span>
+            <button class="logout-btn" onclick="logout()">تسجيل خروج</button>
+        </div>
+    </header>
+
+    <div class="container">
+        <a href="dashboard.html" class="back-link">← العودة للوحة التحكم</a>
+        
+        <div class="page-title">
+            <h1>🔔 الإشعارات</h1>
+            <p>آخر التنبيهات والإشعارات الجديدة</p>
+        </div>
+
+        <div class="notifications-header">
+            <h2>جميع الإشعارات</h2>
+            <button class="mark-all-btn" onclick="markAllAsRead()">تحديد الكل كمقروء</button>
+        </div>
+
+        <div class="filter-tabs">
+            <button class="filter-tab active" onclick="filterNotifications('all')">الكل</button>
+            <button class="filter-tab" onclick="filterNotifications('new')">جديد</button>
+            <button class="filter-tab" onclick="filterNotifications('important')">مهم</button>
+            <button class="filter-tab" onclick="filterNotifications('warning')">تحذيرات</button>
+        </div>
+
+        <div class="notifications-list" id="notificationsList">
+            <!-- Notifications will be populated here -->
+        </div>
+    </div>
+
+    <footer class="footer">
+        © 2026 Green Portal. All rights reserved.
+    </footer>
+
+    <script>
+        // Check if user is logged in
+        const isLoggedIn = sessionStorage.getItem('isLoggedIn');
+        const username = sessionStorage.getItem('username');
+
+        if (!isLoggedIn) {
+            window.location.href = 'index.html';
+        } else {
+            document.getElementById('displayUsername').textContent = username || 'User';
+        }
+
+        // Notifications data
+        const notifications = [
+            {
+                id: 1,
+                icon: '💼',
+                title: 'مشروع جديد تم إضافته',
+                message: 'تم إضافة مشروع "تطوير التطبيق الجديد" إلى قائمتك',
+                time: 'منذ 5 دقائق',
+                type: 'new',
+                unread: true
+            },
+            {
+                id: 2,
+                icon: '👤',
+                title: 'عضو جديد انضم للفريق',
+                message: 'انضم "أحمد محمد" إلى فريق العمل',
+                time: 'منذ ساعة',
+                type: 'new',
+                unread: true
+            },
+            {
+                id: 3,
+                icon: '⚠️',
+                title: 'تنبيه أمان مهم',
+                message: 'تم تسجيل دخول من جهاز جديد',
+                time: 'منذ 3 ساعات',
+                type: 'important',
+                unread: true
+            },
+            {
+                id: 4,
+                icon: '📊',
+                title: 'تقرير جديد متاح',
+                message: 'تقرير الأداء الشهري جاهز للمراجعة',
+                time: 'منذ يوم واحد',
+                type: 'new',
+                unread: false
+            },
+            {
+                id: 5,
+                icon: '⏰',
+                title: 'موعد نهائي يقترب',
+                message: 'موعد تسليم مشروع "الموقع الإلكتروني" خلال 3 أيام',
+                time: 'منذ يوم واحد',
+                type: 'warning',
+                unread: true
+            },
+            {
+                id: 6,
+                icon: '✅',
+                title: 'تم إكمال المهمة',
+                message: 'تم إنهاء مهمة "مراجعة الكود" بنجاح',
+                time: 'منذ يومين',
+                type: 'new',
+                unread: false
+            },
+            {
+                id: 7,
+                icon: '💬',
+                title: 'رسالة جديدة',
+                message: 'لديك رسالة جديدة من "سارة علي"',
+                time: 'منذ 3 أيام',
+                type: 'new',
+                unread: false
+            },
+            {
+                id: 8,
+                icon: '🔄',
+                title: 'تحديث النظام',
+                stringmessage: 'سيتم تحديث النظام غداً من الساعة 2-4 صباحاً',
+                time: 'منذ أسبوع',
+                type: 'important',
+                unread: false
+            }
+        ];
+
+        // Get badge HTML
+        function getBadge(type) {
+            const badges = {
+                'new': '<span class="badge new">جديد</span>',
+                'important': '<span class="badge important">مهم</span>',
+                'warning': '<span class="badge warning">تحذير</span>'
+            };
+            return badges[type] || '';
+        }
+
+        // Render notifications
+        function renderNotifications(filter = 'all') {
+            const notificationsList = document.getElementById('notificationsList');
+            
+            let filtered = notifications;
+            if (filter !== 'all') {
+                filtered = notifications.filter(n => n.type === filter);
+            }
+
+            if (filtered.length === 0) {
+                notificationsList.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📭</div>
+                        <p>لا توجد إشعارات</p>
+                    </div>
+                `;
+                return;
+            }
+
+            notificationsList.innerHTML = filtered.map(notification => `
+                <div class="notification-item ${notification.unread ? 'unread' : ''}" onclick="markAsRead(${notification.id})">
+                    <div class="notification-icon">${notification.icon}</div>
+                    <div class="notification-content">
+                        <div class="notification-title">
+                            ${notification.title}
+                            ${getBadge(notification.type)}
+                        </div>
+                        <p class="notification-message">${notification.message}</p>
+                        <span class="notification-time">${notification.time}</span>
+                        <div class="notification-actions">
+                            <button class="action-btn" onclick="event.stopPropagation(); viewNotification(${notification.id})">عرض</button>
+                            <button class="action-btn danger" onclick="event.stopPropagation(); deleteNotification(${notification.id})">حذف</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Filter notifications
+        function filterNotifications(filter) {
+            document.querySelectorAll('.filter-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            renderNotifications(filter);
+        }
+
+        // Mark as read
+        function markAsRead(id) {
+            const notification = notifications.find(n => n.id === id);
+            if (notification) {
+                notification.unread = false;
+                renderNotifications(document.querySelector('.filter-tab.active').textContent);
+            }
+        }
+
+        // Mark all as read
+        function markAllAsRead() {
+            notifications.forEach(n => n.unread = false);
+            renderNotifications('all');
+        }
+
+        // View notification
+        function viewNotification(id) {
+            alert('عرض الإشعار رقم: ' + id);
+        }
+
+        // Delete notification
+        function deleteNotification(id) {
+            const index = notifications.findIndex(n => n.id === id);
+            if (index > -1) {
+                notifications.splice(index, 1);
+                renderNotifications('all');
+            }
+        }
+
+        // Initial render
+        renderNotifications();
+
+        // Logout function
+        function logout() {
+            sessionStorage.removeItem('isLoggedIn');
+            sessionStorage.removeItem('username');
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>
+
